@@ -8,37 +8,29 @@ function formatName(user){
   return user.firstName + " " + user.LastName;
 }
 
-class Clock extends React.Component{
+class Toggle extends React.Component{
   constructor(props){
     super(props);
-    this.state = {date: new Date()};
+    this.state = {isToggleOn: true};
+    this.handle = this.handleClick.bind(this);
   }
 
-  tick(){
-    this.setState({
-      date: new Date()
-    });
-  }
-
-  componentDidMount(){
-    this.timeId = setInterval(() => this.tick(),1000);
-  }
-
-  componentWillUnmount(){
-    clearInterval(this.timeId);
+  handleClick(){
+    this.setState(prevState => ({
+      isToggleOn: !prevState.isToggleOn
+    }));
   }
 
   render(){
     return (
-      <div>
-        <h2> Hello {formatName(user)} </h2>
-        <h3> It is {this.state.date.toLocaleTimeString()} </h3>
-      </div>
+      <button onClick={this.handle}>
+        {this.state.isToggleOn ? 'ON' : 'OFF'}
+      </button>
     );
   }
 }
 
 ReactDOM.render(
-  <Clock />,
+  <Toggle />,
   document.getElementById('root')
 );
